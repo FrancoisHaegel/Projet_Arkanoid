@@ -1,7 +1,7 @@
-### Projet de SDA ARKANOID 
+# Projet de SDA ARKANOID 
 
  Sujet : https://docs.google.com/document/d/1-Zt1OVUT8pam1U1SQB7oc3BGn5Gbrlq1fAtqSHvsgUA/edit
 
-# All features must be added on new branches, then merged on develop
+### All features must be added on new branches, then merged on develop
 
-# Master is a branch we merge develop on when we finished a whole package of features
+### Master is a branch we merge develop on when we finished a whole package of features
