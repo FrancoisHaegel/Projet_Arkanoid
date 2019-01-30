@@ -4,4 +4,4 @@
 
 ### All features must be added on new branches, then merged on develop
 
-### Master is a branch we merge develop on when we finished a whole package of features
+### Master is a branch we merge with develop when we finished a whole package of features
