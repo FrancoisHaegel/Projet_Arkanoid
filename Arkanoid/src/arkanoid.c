@@ -106,7 +106,8 @@ int main(int argc, char** argv)
 					default: break;
 				}
 				break;
-			case SDL_MOUSEMOTION:	x_vault += event.motion.xrel;	break;
+			// pad x is set to mouse x minus half of pads width
+			case SDL_MOUSEMOTION: x_vault = event.motion.x - (scrVaiss.w/2);	break;
 			case SDL_MOUSEBUTTONDOWN:
 				printf("mouse click %d\n", event.button.button);
 				break;
