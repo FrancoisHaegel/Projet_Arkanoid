@@ -8,8 +8,12 @@ dest = build/
 LDFLAGS = -lSDL2 -Wall 
 
 $(name): $(obj)
-	$(CC) -o $(dest)$@ $^ $(LDFLAGS)
+	$(CC) -o $(dest)$@ $^ $(LDFLAGS); rm -f $(obj)
 
 .PHONY: clean
 clean:
 	rm -f $(obj) $(dest)$(name)
+
+.PHONY: run
+run: 
+	cd build; ./Arkanoid
