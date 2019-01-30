@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# bin
+Arkanoid/Arkanoid
+
 # Object files
 *.o
 *.ko
