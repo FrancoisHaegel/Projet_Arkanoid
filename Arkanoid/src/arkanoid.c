@@ -51,7 +51,7 @@ void draw()
 	SDL_Rect dstBall = {ball.x, ball.y, 0, 0};
 	SDL_BlitSurface(plancheSprites, &srcBall, win_surf, &dstBall);
 
-	// dedplacement
+	// deplacement
 	ball.x += ball.vx / delta_t;
 	ball.y += ball.vy / delta_t;
 
