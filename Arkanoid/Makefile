@@ -8,11 +8,11 @@ dest = build/
 LDFLAGS = -lSDL2 -Wall 
 
 $(name): $(obj)
-	$(CC) -o $(dest)$@ $^ $(LDFLAGS); rm -f $(obj)
+	$(CC) -o $(dest)$@ $^ $(LDFLAGS); make clean
 
 .PHONY: clean
 clean:
-	rm -f $(obj) $(dest)$(name)
+	rm -f $(obj)
 
 .PHONY: run
 run: 
