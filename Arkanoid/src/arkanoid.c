@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 struct { double x; double y; } ball_speed;
-struct { double x; double y;  double vx; double vy;} ball;
+struct { double x; double y;  double vx; double vy; double rayon;} ball;
 
 Uint64 prev, now; // timers
 double delta_t;  // durée frame en ms
@@ -28,8 +28,9 @@ void init()
 
 	ball.x = win_surf->w / 2;
 	ball.y = win_surf->h / 2;
-	ball.vx = 1.0;
-	ball.vy = 1.4;
+	ball.vx = 6.0;
+	ball.vy = 10.0;
+	ball.rayon = 21;
 }
 
 
@@ -52,17 +53,34 @@ void draw()
 	SDL_BlitSurface(plancheSprites, &srcBall, win_surf, &dstBall);
 
 	// deplacement
-	ball.x += ball.vx / delta_t;
-	ball.y += ball.vy / delta_t;
+	ball.x += (ball.vx / delta_t);
+	ball.y += (ball.vy / delta_t);
+
+	// collision pad
+	if (ball.y > win_surf->h - scrVaiss.h - ball.rayon && ball.y < win_surf->h - scrVaiss.h){
+		if(ball.x > x_vault && ball.x < x_vault + scrVaiss.w){
+			printf("\a\n");
+			ball.vy *= -1;
+			if(((x_vault + scrVaiss.w/2) - ball.x) > 0){
+				if (ball.vx > 0){
+					ball.vx *= - 1;
+				}
+			}else{
+				if (ball.vx < 0){
+					ball.vx *= - 1;
+				}			
+			}
+		}
+	}
 
 	// collision bord
-	if ((ball.x < 1) || (ball.x > (win_surf->w - 25)))
+	if ((ball.x < 1) || (ball.x > (win_surf->w - ball.rayon)))
 		ball.vx *= -1;
-	if ((ball.y < 1) || (ball.y > (win_surf->h - 25)))
+	if ((ball.y < 1) || (ball.y > (win_surf->h - ball.rayon)))
 		ball.vy *= -1;
 
 	// touche bas -> rouge
-	if (ball.y >(win_surf->h - 25))
+	if (ball.y >(win_surf->h - ball.rayon))
 		srcBall.y = 64;
 	// touche bas -> vert
 	if (ball.y < 1)
