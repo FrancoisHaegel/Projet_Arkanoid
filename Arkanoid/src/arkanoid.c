@@ -60,7 +60,12 @@ void draw()
 	if (ball.y > win_surf->h - scrVaiss.h - ball.rayon && ball.y < win_surf->h - scrVaiss.h){
 		if(ball.x > x_vault && ball.x < x_vault + scrVaiss.w){
 			printf("\a\n");
-			ball.vy *= -1;
+
+			if(ball.vy > 0){
+				ball.vy *= -1;
+			}
+
+			// renvoie dans la direction du côté du pad qui à été touché
 			if(((x_vault + scrVaiss.w/2) - ball.x) > 0){
 				if (ball.vx > 0){
 					ball.vx *= - 1;
@@ -80,11 +85,15 @@ void draw()
 		ball.vy *= -1;
 
 	// touche bas -> rouge
-	if (ball.y >(win_surf->h - ball.rayon))
+	if (ball.y >(win_surf->h - ball.rayon)){
+		ball.vy = 0;
+		ball.vx = 0;		
 		srcBall.y = 64;
-	// touche bas -> vert
-	if (ball.y < 1)
+	}
+	// touche haut -> vert
+	if (ball.y < 1){
 		srcBall.y = 96;
+	}
 
 	// vaisseau
 	dest.x = x_vault;
