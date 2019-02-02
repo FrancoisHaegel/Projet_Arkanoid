@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-struct { double x; double y; } ball_speed;
 struct { double x; double y;  double vx; double vy; double rayon;} ball;
 
 Uint64 prev, now; // timers
