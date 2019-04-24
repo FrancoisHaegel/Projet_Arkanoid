@@ -9,6 +9,7 @@
 #include "draw.h"
 #include "print.h"
 #include "ball.h"
+#include "brick.h"
 
 // local variables
 Uint64 prev, now; // timers
@@ -21,13 +22,13 @@ void init()
 	init_draw();
 	init_print();
 	init_ball();
+	load_brick_from_file("");
 }
 
 // fonction qui met à jour la surface de la fenetre "win_surf"
 void draw()
 {
 	print_background();
-	print_score(score);
 	print_ball();
 	
 	// deplacement
@@ -70,7 +71,9 @@ void draw()
 	dest.x = x_vault;
 	dest.y = win_surf->h - 32;
 
+	print_bricks();
 	print_vaisseau();
+	print_score(score);	
 }
 
 int main(int argc, char** argv)
