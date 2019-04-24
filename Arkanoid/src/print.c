@@ -2,6 +2,7 @@
 
 SDL_Surface* plancheSprites = NULL;
 SDL_Surface* plancheASCIISprites = NULL;
+SDL_Surface* plancheArkanoidSprites = NULL;
 
 SDL_Rect srcBg = { 0,128, 96,128 }; // x,y, w,h (0,0) en haut a gauche
 SDL_Rect srcBall = { 0,96,24,24 };
@@ -14,6 +15,8 @@ void init_print(void){
     SDL_SetColorKey(plancheSprites, true, 0);  // 0: 00/00/00 noir -> transparent
 	plancheASCIISprites = SDL_LoadBMP(ASCII_SPRITE_PATH);
 	SDL_SetColorKey(plancheASCIISprites, true, 0);  // 0: 00/00/00 noir -> transparent
+	plancheArkanoidSprites = SDL_LoadBMP(ARKANOID_SPRITE_PATH);
+	SDL_SetColorKey(plancheArkanoidSprites, true, 0);  // 0: 00/00/00 noir -> transparent
 }
 
 void print_ascii(const char c, const int x, const int y){
@@ -93,4 +96,36 @@ void print_ball(void){
 // affiche le vaisseau
 void print_vaisseau(void){
 	drawAt(plancheSprites, &srcVaiss, &dest);
+}
+
+SDL_Rect getBrickSprite(const Brick_color* bc){
+	SDL_Rect res = { 0,0, 32,16 }; // x,y, w,h (0,0) en haut a gauche
+	switch (*bc)
+	{
+		case BLANC:
+			res.x = 0 * res.w;
+			res.y = 0;
+		break;
+		case ORANGE:
+			res.x = 1 * res.w;
+			res.y = 0;
+		break;
+		case BLEU_CLAIR:
+			res.x = 2 * res.w;
+			res.y = 0;
+		break;
+		case VERT:
+			res.x = 3 * res.w;
+			res.y = 0;
+		break;
+	}
+	return res;
+}
+
+void print_bricks(void){
+	for(size_t i = 0; i < brick_number; i++){
+		SDL_Rect src = getBrickSprite(&brick_list[i].bc);
+		SDL_Rect dest = {92 + brick_list[i].x, 92 + brick_list[i].y, src.w, src.h};
+		drawAt(plancheArkanoidSprites, &src,&dest);	
+	}
 }
