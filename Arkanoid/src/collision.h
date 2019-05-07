@@ -1,7 +1,6 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
-#include <SDL2/SDL.h>
 #include <stdbool.h>
 
 #include "ball.h"
@@ -9,6 +8,6 @@
 
 // functions
 void colliding();
-void resolveCollision(Brick brick)
+void resolveCollision(BRICK brick);
 
 #endif // !COLLISION_H
