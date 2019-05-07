@@ -17,5 +17,5 @@ void init_ball(int x, int y) {
     //ball.vy = 10.0;
     ball.vx = 0.0;
     ball.vy = 0.0;
-    ball.rayon = 20;
+    ball.rayon = 10;
 }
