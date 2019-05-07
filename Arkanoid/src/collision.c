@@ -4,7 +4,7 @@
 void colliding(){
 	 if(ceil(((ball.y)/16)<20))
  	{
- 		int col = (int)((ball.x)/46);
+ 		int col = (int)((ball.x)/32);
 		int row = (int)(((ball.y)/16));
 	  //check if a brick is at this location
 		 if(brick_list[col][row].bc != TRANSPARENT){

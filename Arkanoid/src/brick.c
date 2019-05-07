@@ -79,7 +79,7 @@ void load_brick_from_file(const char *path) {
 
         for (size_t i = 0; i < read; i++){
             if(line[i] != '\n'){
-                BRICK b = {i * ( win_surf->w / 13 ) , row * 16, getColorFromChar(line[i])};
+                BRICK b = {i * 33, row * 16, getColorFromChar(line[i])};
                 brick_list[i][row] = b;
             }
         }
