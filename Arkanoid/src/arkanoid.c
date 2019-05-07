@@ -10,6 +10,7 @@
 #include "print.h"
 #include "ball.h"
 #include "brick.h"
+#include "collision.h"
 
 // local variables
 Uint64 prev, now; // timers
@@ -30,7 +31,7 @@ void draw()
 {
 	print_background();
 	print_ball();
-	
+
 	// deplacement
 	ball.x += (ball.vx / delta_t);
 	ball.y += (ball.vy / delta_t);
@@ -82,7 +83,7 @@ int main(int argc, char** argv)
 			return 1;
 
 	init();
-    
+
 	bool quit = false;
 	while (!quit)
 	{
@@ -116,7 +117,8 @@ int main(int argc, char** argv)
 		now = SDL_GetPerformanceCounter();
 		delta_t = (double)((now - prev) * 1000 / (double)SDL_GetPerformanceFrequency());
 		draw();
-		SDL_UpdateWindowSurface(pWindow); 
+		colliding();
+		SDL_UpdateWindowSurface(pWindow);
 	}
     SDL_Quit();
     return 0;
