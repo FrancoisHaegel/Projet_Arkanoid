@@ -16,4 +16,27 @@ void colliding(){
 void resolveCollision(BRICK* brick){
     ball.vy = ball.vy * (-1);
     brick->bc = TRANSPARENT;
+
+		// double brickCenterX = brick->x + 16;
+		// double brickCenterY = brick->y + 8;
+		//
+		// double ballCenterX = ball.x + ball.rayon;
+		// double ballCenterY = ball.y + ball.rayon;
+		//
+		// //si on touche sur le bas de la brique
+		// if(ballCenterY > brickCenterY + 8){
+		//
+		// }
+		// //si on touche le haut de la brique
+		// else if(ballCenterY < brickCenterY - 8){
+		//
+		// }
+		// //si on touche la gauche de la brique
+		// else if(ballCenterX > brickCenterX + 16){
+		//
+		// }
+		// //si on touche la droite de la brique
+		// else{
+		//
+		// }
 }
