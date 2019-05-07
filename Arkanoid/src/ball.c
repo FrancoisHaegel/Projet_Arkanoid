@@ -5,5 +5,5 @@ void init_ball(void){
 	ball.y = win_surf->h / 2;
 	ball.vx = 6.0;
 	ball.vy = 10.0;
-	ball.rayon = 21;
+	ball.rayon = 20;
 }

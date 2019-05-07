@@ -97,7 +97,6 @@ void print_vaisseau(void) {
 }
 
 int epoqueBrick = 0; // 0-5 représente le sprite a afficher pour les briques brillantes
-
 SDL_Rect getBrickSprite(const Brick_color *bc) {
     SDL_Rect res = {0, 0, 32, 16}; // x,y, w,h (0,0) en haut a gauche
     switch (*bc) {
@@ -142,7 +141,7 @@ SDL_Rect getBrickSprite(const Brick_color *bc) {
             res.y = 3 * res.h;
             break;
     }
-    if (epoqueBrick == 5) { epoqueBrick = -1;}
+    if (epoqueBrick == 4) { epoqueBrick = -1;}
     else { epoqueBrick++; }
     return res;
 }
@@ -156,5 +155,11 @@ void print_bricks(void) {
                 drawAt(plancheArkanoidSprites, &src, &dest);
             }
         }
+    }
+}
+
+void print_lives(void){
+    for (int i = 0; i < nbLives; ++i) {
+
     }
 }

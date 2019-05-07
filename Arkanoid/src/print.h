@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "ball.h"
 #include "brick.h"
+#include "gameManager.h"
 
 #define ARKANOID_SPRITE_PATH "./res/Arkanoid_sprites.bmp"
 #define OTHER_SPRITE_PATH "./res/sprites.bmp"
@@ -30,6 +31,7 @@ void print_background(void);
 void print_ball(void);
 void print_vaisseau(void);
 void print_bricks(void);
+void print_lives(void);
 SDL_Rect getBrickSprite(const Brick_color* bc);
 
 #endif // !PRINT_H
