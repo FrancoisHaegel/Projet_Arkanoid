@@ -8,6 +8,6 @@
 
 // functions
 void colliding();
-void resolveCollision(BRICK brick);
+void resolveCollision(BRICK * brick);
 
 #endif // !COLLISION_H

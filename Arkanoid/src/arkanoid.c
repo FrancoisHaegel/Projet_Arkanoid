@@ -117,6 +117,7 @@ int main(int argc, char** argv)
 		now = SDL_GetPerformanceCounter();
 		delta_t = (double)((now - prev) * 1000 / (double)SDL_GetPerformanceFrequency());
 		draw();
+		colliding();
 		SDL_UpdateWindowSurface(pWindow);
 	}
     SDL_Quit();
