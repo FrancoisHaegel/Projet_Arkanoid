@@ -1,3 +1,7 @@
+Arkanoid/.idea*
+Arkanoid/CMake*
+Arkanoid/cmake*
+
 # Prerequisites
 *.d
 

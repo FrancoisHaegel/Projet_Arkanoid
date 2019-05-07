@@ -22,7 +22,7 @@ void init()
 	init_draw();
 	init_print();
 	init_ball();
-	load_brick_from_file("");
+	load_brick_from_file("./levels/lvl_1");
 }
 
 // fonction qui met à jour la surface de la fenetre "win_surf"
@@ -73,7 +73,7 @@ void draw()
 
 	print_bricks();
 	print_vaisseau();
-	print_score(score);	
+	//print_score(score);
 }
 
 int main(int argc, char** argv)
