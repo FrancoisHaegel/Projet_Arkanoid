@@ -17,6 +17,7 @@
 Uint64 prev, now; // timers
 double delta_t;  // durée frame en ms
 int x_vault;
+bool gameStarted = false;
 
 void init() {
     play = true;
@@ -24,22 +25,25 @@ void init() {
     nbLives = 3;
     init_draw();
     init_print();
-    init_ball();
+    init_ball(x_vault, win_surf->h - 56 - ball.rayon/2 );
+    //init_ball(x_vault, win_surf->h - ball.rayon - 50);
+
     load_brick_from_file("./levels/lvl_1");
 }
 
 // fonction qui met à jour la surface de la fenetre "win_surf"
 void draw() {
     print_background();
-    print_ball();
     print_bricks();
+    print_ball();
+
 
     // deplacement
     ball.x += (ball.vx / delta_t);
     ball.y += (ball.vy / delta_t);
 
     // collision pad
-    if (ball.y > win_surf->h - srcVaiss.h - ball.rayon && ball.y < win_surf->h - srcVaiss.h) {
+    if (ball.y > win_surf->h - srcVaiss.h - ball.rayon/2 && ball.y < win_surf->h - srcVaiss.h) {
         if (ball.x > x_vault && ball.x < x_vault + srcVaiss.w) {
 
             if (ball.vy > 0)
@@ -56,15 +60,17 @@ void draw() {
     }
 
     // collision bord
-    if ((ball.x < 1) || (ball.x > (win_surf->w - ball.rayon)))
-        ball.vx *= -1;
-    if ((ball.y < 1) || (ball.y > (win_surf->h - ball.rayon)))
+    if ((ball.x < 1) || (ball.x > (win_surf->w - ball.rayon/2)))
+        if(true){
+            ball.vx *= -1;
+        }
+    if ((ball.y < 1) || (ball.y > (win_surf->h - ball.rayon/2)))
         ball.vy *= -1;
 
     // touche bas -> rouge
-    if (ball.y > (win_surf->h - ball.rayon)) {
+    if (ball.y > (win_surf->h - ball.rayon/2)) {
         srcBall.y = 64;
-        removeLive();
+        //removeLive();
     }
 
     // touche haut -> vert
@@ -75,9 +81,13 @@ void draw() {
     dest.x = x_vault;
     dest.y = win_surf->h - 32;
 
+    if (!gameStarted) {
+        ball.x = x_vault + srcVaiss.w / 2 - ball.rayon / 2;
+    }
+
     print_vaisseau();
     print_lives();
-    print_score(132);
+    print_score(score);
 }
 
 int main(int argc, char **argv) {
@@ -115,7 +125,12 @@ int main(int argc, char **argv) {
                     x_vault = event.motion.x - (srcVaiss.w / 2);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
-                    printf("mouse click %d\n", event.button.button);
+                    if (!gameStarted) {
+                        srcBall.y = 96;
+                        gameStarted = true;
+                        ball.vx = 6.0;
+                        ball.vy = 10.0;
+                    }
                     break;
                 default:
                     break;
@@ -126,6 +141,7 @@ int main(int argc, char **argv) {
         delta_t = (double) ((now - prev) * 1000 / (double) SDL_GetPerformanceFrequency());
         if (play) {
             draw();
+            colliding();
         }
         SDL_UpdateWindowSurface(pWindow);
     }

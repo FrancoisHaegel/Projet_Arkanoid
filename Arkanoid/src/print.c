@@ -87,7 +87,7 @@ void print_background(void) {
 
 // affiche balle
 void print_ball(void) {
-    SDL_Rect dstBall = {ball.x, ball.y, 0, 0};
+    SDL_Rect dstBall = {ball.x - ball.rayon/2, ball.y - ball.rayon/2, 0, 0};
     drawAt(plancheSprites, &srcBall, &dstBall);
 }
 
@@ -142,7 +142,7 @@ SDL_Rect getBrickSprite(const Brick_color *bc) {
             break;
     }
     if (epoqueBrick == 4) { epoqueBrick = -1;}
-    else { epoqueBrick++; }
+    //else { epoqueBrick++; }
     return res;
 }
 

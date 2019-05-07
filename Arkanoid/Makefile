@@ -5,7 +5,7 @@ obj = $(src:.c=.o)
 dest = build/
 
 # Flags GCC
-LDFLAGS = -lSDL2 -Wall 
+LDFLAGS = -lSDL2 -Wall -lm
 
 $(name): $(obj)
 	$(CC) -o $(dest)$@ $^ $(LDFLAGS); rm -f $(obj)
