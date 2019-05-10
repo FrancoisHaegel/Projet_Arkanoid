@@ -41,12 +41,13 @@ Brick_color getColorFromChar(char c){
     return brickColor;
 }
 
+#include "gameManager.h"
 void load_brick_from_file(const char *path) {
-
     row_nbr = 13;
     column_nbr = 20;
     //brick_list = malloc(row_nbr * column_nbr * sizeof(BRICK));
 
+    brickCount = 0;
 
     brick_list = malloc(sizeof *brick_list * row_nbr );
     if(brick_list){
@@ -55,7 +56,6 @@ void load_brick_from_file(const char *path) {
             brick_list[i] = malloc(sizeof *brick_list[i] * column_nbr);
         }
     }
-
 
     FILE *fp;
     char *line = NULL;
@@ -66,35 +66,21 @@ void load_brick_from_file(const char *path) {
     if (fp == NULL)
         printf("ERROR fp is NULL");
 
-    //BRICK b = {1 * 33, 1 * 16, VERT};
-
-    //brick_list[0][0] = b;
-
-
     size_t row = 0;
 
     while ((read = getline(&line, &len, fp)) != -1) {
-        // printf("Retrieved line of length %zu:\n", read);
-        //printf("%s", line);
-
         for (size_t i = 0; i < read; i++){
             if(line[i] != '\n'){
                 BRICK b = {i * 33, row * 16, getColorFromChar(line[i])};
                 brick_list[i][row] = b;
+                if(b.bc != TRANSPARENT){
+                    brickCount++;
+                }
             }
         }
         row++;
     }
 
-    //while ((read = getline(&line, &len, fp)) != -1) {
-    //    // printf("Retrieved line of length %zu:\n", read);
-    //    // printf("%s", line);
-    //    for (size_t i = 0; i < read; i++){
-    //    BRICK b = {i * 33, i * 16, VERT};
-    //    brick_list[0][i] = b;
-    //    }
-    //}
-    // brick_list[0][0] = b;
     fclose(fp);
     if (line)
         free(line);

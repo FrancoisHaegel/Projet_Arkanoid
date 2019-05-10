@@ -23,9 +23,11 @@ void init() {
     play = true;
     score = 0;
     nbLives = 3;
+    nbLevel = 2;
+    currentLevel = 1;
     init_draw();
     init_print();
-    init_ball(x_vault, win_surf->h - 56 - ball.rayon/2 );
+    init_ball(x_vault + ball.rayon, win_surf->h - 44 - ball.rayon);
     //init_ball(x_vault, win_surf->h - ball.rayon - 50);
 
     load_brick_from_file("./levels/lvl_1");
@@ -43,12 +45,13 @@ void draw() {
     ball.y += (ball.vy / delta_t);
 
     // collision pad
-    if (ball.y > win_surf->h - srcVaiss.h - ball.rayon/2 && ball.y < win_surf->h - srcVaiss.h) {
+    if (ball.y > win_surf->h - srcVaiss.h - ball.rayon / 2 && ball.y < win_surf->h - srcVaiss.h) {
         if (ball.x > x_vault && ball.x < x_vault + srcVaiss.w) {
 
             if (ball.vy > 0)
                 ball.vy *= -1;
 
+            /*
             // renvoie dans la direction du côté du pad qui à été touché
             if (((x_vault + srcVaiss.w / 2) - ball.x) > 0) {
                 if (ball.vx > 0)
@@ -56,26 +59,40 @@ void draw() {
                 else if (ball.vx < 0)
                     ball.vx *= -1;
             }
+             */
         }
     }
 
     // collision bord
-    if ((ball.x < 1) || (ball.x > (win_surf->w - ball.rayon/2)))
-        if(true){
+    if ((ball.x < 1)) {
+        if (ball.vx < 0) {
             ball.vx *= -1;
         }
-    if ((ball.y < 1) || (ball.y > (win_surf->h - ball.rayon/2)))
-        ball.vy *= -1;
+    }
+    if(ball.x > (win_surf->w - ball.rayon / 2)){
+        if (ball.vx > 0) {
+            ball.vx *= -1;
+        }
+    }
 
     // touche bas -> rouge
-    if (ball.y > (win_surf->h - ball.rayon/2)) {
+    if (ball.y > (win_surf->h - ball.rayon / 2)) {
         srcBall.y = 64;
         //removeLive();
+        ball.y = win_surf->h - 32 - ball.rayon * 2;
+        ball.x = x_vault + ball.rayon;
+        gameStarted = false;
+        ball.vx = 0.0;
+        ball.vy = 0.0;
+
     }
 
     // touche haut -> vert
-    if (ball.y < 1)
-        srcBall.y = 96;
+    if (ball.y < 1){
+        if (ball.vy < 0) {
+            ball.vy *= -1;
+        }
+    }
 
     // vaisseau
     dest.x = x_vault;
@@ -130,6 +147,9 @@ int main(int argc, char **argv) {
                         gameStarted = true;
                         ball.vx = 6.0;
                         ball.vy = 10.0;
+
+                        ball.vx = 12.0;
+                        ball.vy = -20.0;
                     }
                     break;
                 default:

@@ -7,6 +7,10 @@
 
 #include <stdbool.h>
 
+unsigned int nbLevel;
+unsigned int currentLevel;
+unsigned int brickCount;
+
 unsigned int score;
 unsigned int nbLives;
 bool play;
