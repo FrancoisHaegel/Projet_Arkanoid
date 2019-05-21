@@ -7,7 +7,7 @@
 #include "brick.h"
 
 // functions
-void colliding();
-void resolveCollision(BRICK * brick);
+void colliding(double delta_t);
+void resolveCollision(BRICK * brick, double delta_t);
 
 #endif // !COLLISION_H
