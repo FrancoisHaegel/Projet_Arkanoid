@@ -14,6 +14,7 @@ void init() {
     nbLives = 3;
     nbLevel = 3;
     currentLevel = 0;
+    ballOnPadBonus = false;
 
     padPreviousPosX = malloc(5*sizeof(int));
 
@@ -107,6 +108,7 @@ void nextLevel(){
         char a[14] = "./levels/lvl_";
         strcat(a, str);
         load_brick_from_file( a );
+        ballOnPadBonus = false;
     }
 }
 
@@ -144,6 +146,7 @@ void removeLive(){
     if(nbLives == 0){
         loose();
     }
+    ballOnPadBonus = false;
 }
 
 void addScore(int point){
@@ -158,11 +161,14 @@ void resolveGroundHit(){
 }
 
 void resolvePadHit(){
+  if(ballOnPadBonus){
+    setBallOnPad();
+  }else{
     if (ball.vy > 0){
-      //ball.vx *= (1+computePadSpeed());
       ball.vy *= -(1-computePadSpeed());
       ball.vx *= (1+computePadSpeed());
     }
+  }
 }
 
 //permet de calculer la vitesse du pad en fonction de sa position actuelle et de sa position à la frame précédente
@@ -179,18 +185,35 @@ double computePadSpeed(){
 void resolveCollisionBonus(BONUS* bonus){
     switch (bonus->bt){
         case S:
+            ball.vx *= 0.5;
+            ball.vy *= 0.5;
+            ballOnPadBonus = false;
+            break;
+        case C:
+            ballOnPadBonus = true;
+            break;
+        case B:
+            nextLevel();
+            setBallOnPad();
+            break;
+        case P:
+            addLive();
             break;
     }
+    addScore(1000);
     unspawn_bonus(bonus);
 }
 
 void collisionBonus(int x_vault, int w_vault){
     for (int i = 0; i < bonus_number; ++i) {
-        if(bonus_list[i].y + 16 > win_surf->h - 52 && bonus_list[i].y < win_surf->h - 36){
-            addScore(1);
+        //if(bonus_list[i].y + 16 > win_surf->h - 52 && bonus_list[i].y < win_surf->h - 36){
+        if(bonus_list[i].y + 16 > win_surf->h - 52){
             if(bonus_list[i].x + 32 > x_vault - (w_vault / 2) && bonus_list[i].x < x_vault + (w_vault / 2)){
                 addScore(1);
                 resolveCollisionBonus(&bonus_list[i]);
+            }
+            else if(bonus_list[i].y + 16 > win_surf->h) {
+                unspawn_bonus(&bonus_list[i]);
             }
         }
     }
