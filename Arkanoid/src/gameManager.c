@@ -18,6 +18,7 @@ void init() {
     nbLevel = 3;
     currentLevel = 0;
     ballOnPadBonus = false;
+    ballSlowed = false;
 
     padPreviousPosX = malloc(5*sizeof(int));
 
@@ -151,6 +152,11 @@ void removeLive(){
         loose();
     }
     ballOnPadBonus = false;
+    if(ballSlowed) {
+        ball.vx *= 2;
+        ball.vy *= 2;
+        ballSlowed = false;
+    }
 }
 
 void addScore(int point){
@@ -189,11 +195,19 @@ double computePadSpeed(){
 void resolveCollisionBonus(BONUS* bonus){
     switch (bonus->bt){
         case S:
-            ball.vx *= 0.5;
-            ball.vy *= 0.5;
             ballOnPadBonus = false;
+            if(!ballSlowed){
+                ball.vx *= 0.5;
+                ball.vy *= 0.5;
+                ballSlowed = true;
+            }
             break;
         case C:
+            if(ballSlowed) {
+                ball.vx *= 2;
+                ball.vy *= 2;
+                ballSlowed = false;
+            }
             ballOnPadBonus = true;
             break;
         case B:
@@ -201,6 +215,11 @@ void resolveCollisionBonus(BONUS* bonus){
             //setBallOnPad();
             break;
         case P:
+            if(ballSlowed) {
+                ball.vx *= 2;
+                ball.vy *= 2;
+                ballSlowed = false;
+            }
             ballOnPadBonus = false;
             addLive();
             break;

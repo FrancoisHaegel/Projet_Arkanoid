@@ -31,6 +31,7 @@ unsigned int brickCount;
 unsigned int score;
 unsigned int nbLives;
 bool ballOnPadBonus;
+bool ballSlowed;
 
 // local variables
 Uint64 prev, now; // timers
