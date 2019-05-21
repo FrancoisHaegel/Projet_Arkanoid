@@ -10,7 +10,7 @@ void colliding(double delta_t) {
         if(col > -1 && col < 13 && row > -1 && row < 20)
         if (brick_list[col][row].bc != TRANSPARENT) {
             resolveCollision(&brick_list[col][row], delta_t);
-            spawn_bonus(col, row, C);
+            spawn_bonus(C, col*32, row*16);
         }
     }
 }
