@@ -3,11 +3,14 @@
 //
 
 #include "gameManager.h"
+#include <time.h>
+#include <stdlib.h>
 
 //ancienne coordonée X du pad
 int* padPreviousPosX;
 
 void init() {
+    srand(time(NULL));
     gameStarted = false;
     play = true;
     score = 0;
@@ -88,7 +91,7 @@ bool start(){
         delta_t = (double) ((now - prev) * 1000 / (double) SDL_GetPerformanceFrequency());
         if (play) {
           colliding(delta_t);
-          collisionBonus(x_vault, srcVaiss.w);
+          collisionBonus(x_vault + (srcVaiss.w / 2), srcVaiss.w);
           draw();
         }
         SDL_UpdateWindowSurface(pWindow);
@@ -186,11 +189,14 @@ void resolveCollisionBonus(BONUS* bonus){
 
 void collisionBonus(int x_vault, int w_vault){
     for (int i = 0; i < bonus_number; ++i) {
-        if(bonus_list[i].y + 16 > win_surf->h - 52 && bonus_list[i].y < win_surf->h - 36){
-            addScore(1);
+        //if(bonus_list[i].y + 16 > win_surf->h - 52 && bonus_list[i].y < win_surf->h - 36){
+        if(bonus_list[i].y + 16 > win_surf->h - 52){
             if(bonus_list[i].x + 32 > x_vault - (w_vault / 2) && bonus_list[i].x < x_vault + (w_vault / 2)){
                 addScore(1);
                 resolveCollisionBonus(&bonus_list[i]);
+            }
+            else if(bonus_list[i].y + 16 > win_surf->h) {
+                unspawn_bonus(&bonus_list[i]);
             }
         }
     }

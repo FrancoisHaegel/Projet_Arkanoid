@@ -315,7 +315,8 @@ SDL_Rect getBonusSprite(BONUS* bonus){
 }
 
 void spawn_bonus(Bonus_type bt, unsigned int x, unsigned int y){
-    if(bonus_number < 6){
+    //if(bonus_number < 6){
+    if(bonus_number < 1){
         BONUS b = {x, y, bt, 0};
         bonus_list[bonus_number] = b;
         bonus_number++;
