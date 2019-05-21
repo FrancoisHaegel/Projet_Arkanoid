@@ -74,8 +74,8 @@ bool start(){
         now = SDL_GetPerformanceCounter();
         delta_t = (double) ((now - prev) * 1000 / (double) SDL_GetPerformanceFrequency());
         if (play) {
-            draw();
-            colliding();
+          colliding(delta_t);
+          draw();
         }
         SDL_UpdateWindowSurface(pWindow);
     }
