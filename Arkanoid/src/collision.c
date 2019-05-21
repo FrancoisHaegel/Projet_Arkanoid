@@ -25,17 +25,7 @@ void resolveCollision(BRICK *brick, double delta_t) {
     double brickCenterY = brick->y + 8;
 
     ////////3e tentative /////////
-    if(ballCenterY < brickCenterY - 8
-        && ballCenterX > brickCenterX - 16
-        && ballCenterX < brickCenterX + 16){
-        ball.vy = ball.vy * (-1);
-        destroyBrick(brick);
-    }else if(ballCenterY > brickCenterY + 8
-        && ballCenterX > brickCenterX - 16
-        && ballCenterX < brickCenterX + 16){
-        ball.vy = ball.vy * (-1);
-        destroyBrick(brick);
-    }else if(ballCenterX > brickCenterX - 16
+    if(ballCenterX > brickCenterX - 16
       && ballCenterY > brickCenterY - 8
       && ballCenterY < brickCenterY + 8){
         ball.vx = ball.vx * (-1);
@@ -44,6 +34,16 @@ void resolveCollision(BRICK *brick, double delta_t) {
       && ballCenterY > brickCenterY - 8
       && ballCenterY < brickCenterY + 8){
         ball.vx = ball.vx * (-1);
+        destroyBrick(brick);
+    }else if(ballCenterY < brickCenterY - 8
+        && ballCenterX > brickCenterX - 16
+        && ballCenterX < brickCenterX + 16){
+        ball.vy = ball.vy * (-1);
+        destroyBrick(brick);
+    }else if(ballCenterY > brickCenterY + 8
+        && ballCenterX > brickCenterX - 16
+        && ballCenterX < brickCenterX + 16){
+        ball.vy = ball.vy * (-1);
         destroyBrick(brick);
     }
 }
