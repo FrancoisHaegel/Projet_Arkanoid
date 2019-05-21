@@ -3,11 +3,14 @@
 //
 
 #include "gameManager.h"
+#include <time.h>
+#include <stdlib.h>
 
 //ancienne coordonée X du pad
 int* padPreviousPosX;
 
 void init() {
+    srand(time(NULL));
     gameStarted = false;
     play = true;
     score = 0;
@@ -89,7 +92,7 @@ bool start(){
         delta_t = (double) ((now - prev) * 1000 / (double) SDL_GetPerformanceFrequency());
         if (play) {
           colliding(delta_t);
-          collisionBonus(x_vault, srcVaiss.w);
+          collisionBonus(x_vault + (srcVaiss.w / 2), srcVaiss.w);
           draw();
         }
         SDL_UpdateWindowSurface(pWindow);
@@ -118,6 +121,7 @@ void restart(){
     bonus_number = 0;
     currentLevel = 0;
     nextLevel();
+    setBallOnPad();
     play = true;
 }
 
@@ -161,14 +165,14 @@ void resolveGroundHit(){
 }
 
 void resolvePadHit(){
-  if(ballOnPadBonus){
-    setBallOnPad();
-  }else{
-    if (ball.vy > 0){
-      ball.vy *= -(1-computePadSpeed());
-      ball.vx *= (1+computePadSpeed());
+    if(ballOnPadBonus){
+        setBallOnPad();
+    }else{
+        if (ball.vy > 0){
+            ball.vy *= -(1-computePadSpeed()*5);
+            ball.vx *= (1+computePadSpeed()*5);
+        }
     }
-  }
 }
 
 //permet de calculer la vitesse du pad en fonction de sa position actuelle et de sa position à la frame précédente
@@ -194,9 +198,10 @@ void resolveCollisionBonus(BONUS* bonus){
             break;
         case B:
             nextLevel();
-            setBallOnPad();
+            //setBallOnPad();
             break;
         case P:
+            ballOnPadBonus = false;
             addLive();
             break;
     }
@@ -209,7 +214,6 @@ void collisionBonus(int x_vault, int w_vault){
         //if(bonus_list[i].y + 16 > win_surf->h - 52 && bonus_list[i].y < win_surf->h - 36){
         if(bonus_list[i].y + 16 > win_surf->h - 52){
             if(bonus_list[i].x + 32 > x_vault - (w_vault / 2) && bonus_list[i].x < x_vault + (w_vault / 2)){
-                addScore(1);
                 resolveCollisionBonus(&bonus_list[i]);
             }
             else if(bonus_list[i].y + 16 > win_surf->h) {
@@ -223,10 +227,12 @@ void collisionBonus(int x_vault, int w_vault){
 // fonction qui met à jour la surface de la fenetre "win_surf"
 void draw() {
 
-    // Dessine le fond
-    print_background();
-    // Dessine les briques
-    print_bricks();
+    if (play) {
+        // Dessine le fond
+        print_background();
+        // Dessine les briques
+        print_bricks();
+    }
 
     padPreviousPosX[4] = padPreviousPosX[3];
     padPreviousPosX[3] = padPreviousPosX[2];

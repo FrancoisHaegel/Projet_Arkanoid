@@ -1,6 +1,11 @@
 #include "collision.h"
 #include <math.h>
 #include "gameManager.h"
+#include <time.h>
+#include <stdlib.h>
+
+int bonus_roll = 0;
+Bonus_type bonus_roll_array[4] = {S, C, B, P};
 
 void colliding(double delta_t) {
     if (ceil(((ball.y) / 16) < 20)) {
@@ -10,7 +15,13 @@ void colliding(double delta_t) {
         if(col > -1 && col < 13 && row > -1 && row < 20)
         if (brick_list[col][row].bc != TRANSPARENT) {
             resolveCollision(&brick_list[col][row], delta_t);
-            spawn_bonus(C, col*32, row*16);
+            int r = rand() % 3;
+            if(r == 0){
+                bonus_roll++;
+                if (bonus_roll > 3)
+                    bonus_roll = 0;
+                spawn_bonus(bonus_roll_array[bonus_roll], col * 32, row * 16);
+            }
         }
     }
 }
@@ -90,7 +101,7 @@ void destroyBrick(BRICK *brick){
         brick->bc = TRANSPARENT;
         brickCount--;
     }
-    if(brickCount == 0 && currentLevel != nbLevel + 1){
+    if(brickCount == 0){
         nextLevel();
     }
 }
