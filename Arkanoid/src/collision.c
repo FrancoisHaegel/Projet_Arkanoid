@@ -10,6 +10,7 @@ void colliding(double delta_t) {
         if(col > -1 && col < 13 && row > -1 && row < 20)
         if (brick_list[col][row].bc != TRANSPARENT) {
             resolveCollision(&brick_list[col][row], delta_t);
+            spawn_bonus(col, row, C);
         }
     }
 }
@@ -49,6 +50,7 @@ void resolveCollision(BRICK *brick, double delta_t) {
 }
 
 void destroyBrick(BRICK *brick){
+    bool break_brick = true;
     switch (brick->bc){
         case BLANC:
             addScore(50);
@@ -74,10 +76,20 @@ void destroyBrick(BRICK *brick){
         case JAUNE:
             addScore(120);
             break;
+        case GRIS:
+            if(brick->level > 1){
+                glow(brick);
+                break_brick = false;
+                brick->level--;
+                addScore(100 * currentLevel);
+            }
+            break;
     }
 
-    brick->bc = TRANSPARENT;
-    brickCount--;
+    if(break_brick){
+        brick->bc = TRANSPARENT;
+        brickCount--;
+    }
     if(brickCount == 0 && currentLevel != nbLevel + 1){
         nextLevel();
     }

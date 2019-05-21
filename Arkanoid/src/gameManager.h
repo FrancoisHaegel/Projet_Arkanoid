@@ -17,6 +17,7 @@
 #include "print.h"
 #include "ball.h"
 #include "brick.h"
+#include "bonus.h"
 #include "collision.h"
 
 
@@ -42,6 +43,7 @@ void draw();
 void init();
 bool start();
 void nextLevel();
+void restart();
 void win();
 void loose();
 void addLive();

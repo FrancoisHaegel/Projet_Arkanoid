@@ -13,7 +13,7 @@ void init() {
     score = 0;
     nbLives = 3;
     nbLevel = 3;
-    currentLevel = 1;
+    currentLevel = 0;
 
     padPreviousPosX = malloc(5*sizeof(int));
 
@@ -25,6 +25,7 @@ void init() {
 
     init_draw();
     init_print();
+    init_bonus();
     init_ball(x_vault + ball.rayon, win_surf->h - 69 - ball.rayon);
     nextLevel();
 }
@@ -55,6 +56,10 @@ bool start(){
                         case SDLK_ESCAPE:
                             quit = true;
                             break;
+                        case SDLK_RETURN:
+                            if(!play)
+                                restart();
+                            break;
                         default:
                             break;
                     }
@@ -67,8 +72,8 @@ bool start(){
                     if (!gameStarted) {
                         srcBall.y = 96;
                         gameStarted = true;
-                        ball.vx = 3.0;
-                        ball.vy = -5.0;
+                        ball.vx = 6.0;
+                        ball.vy = -10.0;
 
                         //ball.vx = 12.0;
                         //ball.vy = -20.0;
@@ -83,6 +88,7 @@ bool start(){
         delta_t = (double) ((now - prev) * 1000 / (double) SDL_GetPerformanceFrequency());
         if (play) {
           colliding(delta_t);
+          collisionBonus(x_vault, srcVaiss.w);
           draw();
         }
         SDL_UpdateWindowSurface(pWindow);
@@ -104,12 +110,27 @@ void nextLevel(){
     }
 }
 
+void restart(){
+    score = 0;
+    nbLives = 3;
+    bonus_number = 0;
+    currentLevel = 0;
+    nextLevel();
+    play = true;
+}
+
 void win(){
     play = false;
+    print_text("CONGRATULATION", 14, 68, 400);
+    print_text("RETURN TO RESTART", 17, 38, 440);
+    print_text("ESCAPE TO QUIT", 14, 68, 480);
 }
 
 void loose(){
     play = false;
+    print_text("WASTED", 6, 148, 400);
+    print_text("RETURN TO RESTART", 17, 38, 440);
+    print_text("ESCAPE TO QUIT", 14, 68, 480);
 }
 
 void addLive(){
@@ -153,6 +174,26 @@ double computePadSpeed(){
        res = -((double)padPreviousPosX[4] - (double)padPreviousPosX[0])/416;
      }
     return res;
+}
+
+void resolveCollisionBonus(BONUS* bonus){
+    switch (bonus->bt){
+        case S:
+            break;
+    }
+    unspawn_bonus(bonus);
+}
+
+void collisionBonus(int x_vault, int w_vault){
+    for (int i = 0; i < bonus_number; ++i) {
+        if(bonus_list[i].y + 16 > win_surf->h - 52 && bonus_list[i].y < win_surf->h - 36){
+            addScore(1);
+            if(bonus_list[i].x + 32 > x_vault - (w_vault / 2) && bonus_list[i].x < x_vault + (w_vault / 2)){
+                addScore(1);
+                resolveCollisionBonus(&bonus_list[i]);
+            }
+        }
+    }
 }
 
 
@@ -214,6 +255,8 @@ void draw() {
         ball.x = x_vault + srcVaiss.w / 2 - ball.rayon / 2;
     }
 
+    // Dessine les bonus
+    print_bonuses();
     // Dessine la balle
     print_ball();
     // Dessine le vaisseau

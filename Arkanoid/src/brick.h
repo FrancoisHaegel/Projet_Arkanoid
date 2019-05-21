@@ -21,7 +21,7 @@ typedef enum
     OR = 9,
 } Brick_color;
 
-typedef struct { int x; int y; Brick_color bc; } BRICK;
+typedef struct { int x; int y; Brick_color bc; unsigned int level; unsigned int spriteCount; } BRICK;
 
 // List of all bricks
 BRICK** brick_list;
