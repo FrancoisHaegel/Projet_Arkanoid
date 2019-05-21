@@ -71,7 +71,7 @@ void load_brick_from_file(const char *path) {
     while ((read = getline(&line, &len, fp)) != -1) {
         for (size_t i = 0; i < read; i++){
             if(line[i] != '\n'){
-                BRICK b = {i * 33, row * 16, getColorFromChar(line[i])};
+                BRICK b = {i * 32, row * 16, getColorFromChar(line[i])};
                 brick_list[i][row] = b;
                 if(b.bc != TRANSPARENT){
                     brickCount++;

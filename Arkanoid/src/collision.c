@@ -29,20 +29,26 @@ void resolveCollision(BRICK *brick, double delta_t) {
         && ballCenterX > brickCenterX - 16
         && ballCenterX < brickCenterX + 16){
         ball.vy = ball.vy * (-1);
+        destroyBrick(brick);
     }else if(ballCenterY > brickCenterY + 8
         && ballCenterX > brickCenterX - 16
         && ballCenterX < brickCenterX + 16){
         ball.vy = ball.vy * (-1);
+        destroyBrick(brick);
     }else if(ballCenterX > brickCenterX - 16
       && ballCenterY > brickCenterY - 8
       && ballCenterY < brickCenterY + 8){
         ball.vx = ball.vx * (-1);
+        destroyBrick(brick);
     }else if(ballCenterX > brickCenterX + 16
       && ballCenterY > brickCenterY - 8
       && ballCenterY < brickCenterY + 8){
         ball.vx = ball.vx * (-1);
+        destroyBrick(brick);
     }
+}
 
+void destroyBrick(BRICK *brick){
     switch (brick->bc){
         case BLANC:
             addScore(50);
