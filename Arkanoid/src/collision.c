@@ -16,6 +16,33 @@ void colliding() {
 }
 
 void resolveCollision(BRICK *brick) {
+    switch (brick->bc){
+        case BLANC:
+            addScore(50);
+            break;
+        case ORANGE:
+            addScore(60);
+            break;
+        case BLEU_CLAIR:
+            addScore(70);
+            break;
+        case VERT:
+            addScore(80);
+            break;
+        case ROUGE:
+            addScore(90);
+            break;
+        case BLEU:
+            addScore(100);
+            break;
+        case ROSE:
+            addScore(110);
+            break;
+        case JAUNE:
+            addScore(120);
+            break;
+    }
+
     ball.vy = ball.vy * (-1);
     brick->bc = TRANSPARENT;
     brickCount--;

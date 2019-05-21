@@ -171,7 +171,7 @@ void setBallColor(unsigned int color){
 }
 
 void setBallOnPad(){
-    ball.y = win_surf->h - 32 - ball.rayon * 2;
+    ball.y = win_surf->h - 52 - ball.rayon * 2;
     ball.x = x_vault + ball.rayon;
     gameStarted = false;
     ball.vx = 0.0;

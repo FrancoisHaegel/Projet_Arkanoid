@@ -2,6 +2,5 @@
 #include "gameManager.h"
 
 int main(int argc, char **argv) {
-    start();
-    return 0;
+    return start();
 }

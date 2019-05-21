@@ -14,9 +14,7 @@ void init() {
     init_draw();
     init_print();
     init_ball(x_vault + ball.rayon, win_surf->h - 69 - ball.rayon);
-    //init_ball(x_vault, win_surf->h - ball.rayon - 50);
-
-    load_brick_from_file("./levels/lvl_1");
+    nextLevel();
 }
 
 bool start(){
@@ -78,6 +76,7 @@ bool start(){
         SDL_UpdateWindowSurface(pWindow);
     }
     SDL_Quit();
+    return  0;
 }
 
 void nextLevel(){
