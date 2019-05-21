@@ -59,8 +59,8 @@ bool start(){
                     if (!gameStarted) {
                         srcBall.y = 96;
                         gameStarted = true;
-                        ball.vx = 6.0;
-                        ball.vy = -10.0;
+                        ball.vx = 3.0;
+                        ball.vy = -5.0;
 
                         //ball.vx = 12.0;
                         //ball.vy = -20.0;
