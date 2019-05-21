@@ -4,8 +4,8 @@
 
 void colliding(double delta_t) {
     if (ceil(((ball.y) / 16) < 20)) {
-        int col = (int) ((ball.x + ball.rayon) / 32);
-        int row = (int) ((ball.y + ball.rayon) / 16);
+        int col = (int) ((ball.x + ball.rayon + (ball.vx / delta_t)) / 32);
+        int row = (int) ((ball.y + ball.rayon + (ball.vx / delta_t)) / 16);
         //check if a brick is at this location
         if(col > -1 && col < 13 && row > -1 && row < 20)
         if (brick_list[col][row].bc != TRANSPARENT) {
