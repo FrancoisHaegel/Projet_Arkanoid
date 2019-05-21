@@ -23,11 +23,13 @@ typedef enum
 
 typedef struct { int x; int y; Brick_color bc; } BRICK;
 
+// List of all bricks
 BRICK** brick_list;
-//BRICK brick_list[1][1];
+
 int row_nbr;
 int column_nbr;
 
+// Load and display the bricks from a txt file
 void load_brick_from_file(const char* path);
 
 #endif // !BRICK_H

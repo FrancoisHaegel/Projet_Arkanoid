@@ -75,7 +75,7 @@ void print_score(const int score) {
     }
 }
 
-// remplit le fond 
+// remplit le fond
 void print_background(void) {
     for (int j = 0; j < win_surf->h; j += 128)
         for (int i = 0; i < win_surf->w; i += 96) {
@@ -159,7 +159,21 @@ void print_bricks(void) {
 }
 
 void print_lives(void){
+    SDL_Rect src = {384, 127, 64, 16}; // x,y, w,h (0,0) en haut a gauche
     for (int i = 0; i < nbLives; ++i) {
-
+        SDL_Rect dest = {i * 70 + 10, win_surf->h - 20, 64, 16};
+        drawAt(plancheArkanoidSprites, &src, &dest);
     }
+}
+
+void setBallColor(unsigned int color){
+    srcBall.y = color;
+}
+
+void setBallOnPad(){
+    ball.y = win_surf->h - 52 - ball.rayon * 2;
+    ball.x = x_vault + ball.rayon;
+    gameStarted = false;
+    ball.vx = 0.0;
+    ball.vy = 0.0;
 }

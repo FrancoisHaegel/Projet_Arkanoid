@@ -32,6 +32,10 @@ void print_ball(void);
 void print_vaisseau(void);
 void print_bricks(void);
 void print_lives(void);
+
+void setBallOnPad();
+void setBallColor(unsigned int color);
+
 SDL_Rect getBrickSprite(const Brick_color* bc);
 
 #endif // !PRINT_H
