@@ -49,6 +49,7 @@ void loose();
 void addLive();
 void removeLive();
 void addScore(int point);
+double computePadSpeed();
 
 
 

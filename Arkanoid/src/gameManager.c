@@ -4,6 +4,9 @@
 
 #include "gameManager.h"
 
+//ancienne coordonée X du pad
+int* padPreviousPosX;
+
 void init() {
     gameStarted = false;
     play = true;
@@ -11,6 +14,15 @@ void init() {
     nbLives = 3;
     nbLevel = 3;
     currentLevel = 0;
+
+    padPreviousPosX = malloc(5*sizeof(int));
+
+    padPreviousPosX[0] = 0;
+    padPreviousPosX[1] = 0;
+    padPreviousPosX[2] = 0;
+    padPreviousPosX[3] = 0;
+    padPreviousPosX[4] = 0;
+
     init_draw();
     init_print();
     init_bonus();
@@ -146,18 +158,22 @@ void resolveGroundHit(){
 }
 
 void resolvePadHit(){
-    if (ball.vy > 0)
-        ball.vy *= -1;
-
-    /*
-    // renvoie dans la direction du côté du pad qui à été touché
-    if (((x_vault + srcVaiss.w / 2) - ball.x) > 0) {
-        if (ball.vx > 0)
-            ball.vx *= -1;
-        else if (ball.vx < 0)
-            ball.vx *= -1;
+    if (ball.vy > 0){
+      //ball.vx *= (1+computePadSpeed());
+      ball.vy *= -(1-computePadSpeed());
+      ball.vx *= (1+computePadSpeed());
     }
-     */
+}
+
+//permet de calculer la vitesse du pad en fonction de sa position actuelle et de sa position à la frame précédente
+double computePadSpeed(){
+    double res = 0;
+    if(padPreviousPosX[4] < padPreviousPosX[0]){
+       res = ((double)padPreviousPosX[0] - (double)padPreviousPosX[4])/416;
+     }else if(padPreviousPosX[4] > padPreviousPosX[0]){
+       res = -((double)padPreviousPosX[4] - (double)padPreviousPosX[0])/416;
+     }
+    return res;
 }
 
 void resolveCollisionBonus(BONUS* bonus){
@@ -183,10 +199,17 @@ void collisionBonus(int x_vault, int w_vault){
 
 // fonction qui met à jour la surface de la fenetre "win_surf"
 void draw() {
+
     // Dessine le fond
     print_background();
     // Dessine les briques
     print_bricks();
+
+    padPreviousPosX[4] = padPreviousPosX[3];
+    padPreviousPosX[3] = padPreviousPosX[2];
+    padPreviousPosX[2] = padPreviousPosX[1];
+    padPreviousPosX[1] = padPreviousPosX[0];
+    padPreviousPosX[0] = x_vault;
 
     // deplacement de la balle
     ball.x += (ball.vx / delta_t);
