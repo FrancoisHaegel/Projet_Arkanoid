@@ -17,6 +17,7 @@
 #include "print.h"
 #include "ball.h"
 #include "brick.h"
+#include "bonus.h"
 #include "collision.h"
 
 

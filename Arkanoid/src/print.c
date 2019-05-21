@@ -26,7 +26,7 @@ void glow( BRICK* brick ) {
 }
 
 void print_ascii(const char c, const int x, const int y) {
-    SDL_Rect src = {0, 0, 17, 20}; // x,y, w,h (0,0) en haut a gauche
+    SDL_Rect src = {0, 0, 17, 22}; // x,y, w,h (0,0) en haut a gauche
     switch (c) {
         case '0':
             src.x = 2;
@@ -280,6 +280,66 @@ void print_lives(void){
     for (int i = 0; i < nbLives; ++i) {
         SDL_Rect dest = {i * 70 + 10, win_surf->h - 20, 64, 16};
         drawAt(plancheArkanoidSprites, &src, &dest);
+    }
+}
+
+SDL_Rect getBonusSprite(BONUS* bonus){
+    SDL_Rect res = {256 + (bonus->spriteCount / 10) * 32, 0, 32, 16}; // x,y, w,h (0,0) en haut a gauche
+    switch (bonus->bt) {
+        case S:
+            res.y = 0 * res.h;
+            break;
+        case C:
+            res.y = 1 * res.h;
+            break;
+        case L:
+            res.y = 2 * res.h;
+            break;
+        case E:
+            res.y = 3 * res.h;
+            break;
+        case D:
+            res.y = 4 * res.h;
+            break;
+        case B:
+            res.y = 5 * res.h;
+            break;
+        case P:
+            res.y = 6 * res.h;
+            break;
+    }
+    bonus->spriteCount++;
+    if(bonus->spriteCount > 80)
+        bonus->spriteCount = 0;
+    return res;
+}
+
+void spawn_bonus(Bonus_type bt, unsigned int x, unsigned int y){
+    if(bonus_number < 6){
+        BONUS b = {x, y, bt, 0};
+        bonus_list[bonus_number] = b;
+        bonus_number++;
+    }
+}
+
+void unspawn_bonus(BONUS* bn){
+    bn->spriteCount = -1;
+    int j = 0;
+    for (unsigned int i = 0; i < bonus_number; ++i) {
+        if(bonus_list[i].spriteCount > -1){
+            bonus_list[j] = bonus_list[i];
+            j++;
+        }
+    }
+    bonus_number--;
+}
+
+void print_bonuses(void){
+    for (unsigned int i = 0; i < bonus_number; i++) {
+        SDL_Rect src = getBonusSprite(&bonus_list[i]);
+        SDL_Rect dest = {bonus_list[i].x, bonus_list[i].y, src.w, src.h};
+        drawAt(plancheArkanoidSprites, &src, &dest);
+        bonus_list[i].y += 6.00 / delta_t;
     }
 }
 
