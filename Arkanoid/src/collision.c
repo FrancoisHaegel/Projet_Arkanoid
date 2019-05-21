@@ -2,20 +2,47 @@
 #include <math.h>
 #include "gameManager.h"
 
-
-void colliding() {
+void colliding(double delta_t) {
     if (ceil(((ball.y) / 16) < 20)) {
-        int col = (int) ((ball.x) / 32);
-        int row = (int) (((ball.y) / 16));
+        int col = (int) ((ball.x + ball.rayon) / 32);
+        int row = (int) ((ball.y + ball.rayon) / 16);
         //check if a brick is at this location
         if(col > -1 && col < 13 && row > -1 && row < 20)
         if (brick_list[col][row].bc != TRANSPARENT) {
-            resolveCollision(&brick_list[col][row]);
+            resolveCollision(&brick_list[col][row], delta_t);
         }
     }
 }
 
-void resolveCollision(BRICK *brick) {
+void resolveCollision(BRICK *brick, double delta_t) {
+    double ballCenterX = ball.x + ball.rayon;
+    double ballCenterY = ball.y + ball.rayon;
+
+    ballCenterX -= (ball.vx / delta_t);
+    ballCenterY -= (ball.vy / delta_t);
+
+    double brickCenterX = brick->x + 16;
+    double brickCenterY = brick->y + 8;
+
+    ////////3e tentative /////////
+    if(ballCenterY < brickCenterY - 8
+        && ballCenterX > brickCenterX - 16
+        && ballCenterX < brickCenterX + 16){
+        ball.vy = ball.vy * (-1);
+    }else if(ballCenterY > brickCenterY + 8
+        && ballCenterX > brickCenterX - 16
+        && ballCenterX < brickCenterX + 16){
+        ball.vy = ball.vy * (-1);
+    }else if(ballCenterX > brickCenterX - 16
+      && ballCenterY > brickCenterY - 8
+      && ballCenterY < brickCenterY + 8){
+        ball.vx = ball.vx * (-1);
+    }else if(ballCenterX > brickCenterX + 16
+      && ballCenterY > brickCenterY - 8
+      && ballCenterY < brickCenterY + 8){
+        ball.vx = ball.vx * (-1);
+    }
+
     switch (brick->bc){
         case BLANC:
             addScore(50);
@@ -43,7 +70,6 @@ void resolveCollision(BRICK *brick) {
             break;
     }
 
-    ball.vy = ball.vy * (-1);
     brick->bc = TRANSPARENT;
     brickCount--;
     if(brickCount == 0 && currentLevel != nbLevel + 1){
