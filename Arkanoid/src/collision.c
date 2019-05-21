@@ -15,7 +15,6 @@ void colliding(double delta_t) {
         if(col > -1 && col < 13 && row > -1 && row < 20)
         if (brick_list[col][row].bc != TRANSPARENT) {
             resolveCollision(&brick_list[col][row], delta_t);
-
             int r = rand() % 3;
             if(r == 0){
                 bonus_roll++;

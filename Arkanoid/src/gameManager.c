@@ -17,6 +17,7 @@ void init() {
     nbLives = 3;
     nbLevel = 3;
     currentLevel = 0;
+    ballOnPadBonus = false;
 
     padPreviousPosX = malloc(5*sizeof(int));
 
@@ -110,6 +111,7 @@ void nextLevel(){
         char a[14] = "./levels/lvl_";
         strcat(a, str);
         load_brick_from_file( a );
+        ballOnPadBonus = false;
     }
 }
 
@@ -147,6 +149,7 @@ void removeLive(){
     if(nbLives == 0){
         loose();
     }
+    ballOnPadBonus = false;
 }
 
 void addScore(int point){
@@ -161,11 +164,14 @@ void resolveGroundHit(){
 }
 
 void resolvePadHit(){
+  if(ballOnPadBonus){
+    setBallOnPad();
+  }else{
     if (ball.vy > 0){
-      //ball.vx *= (1+computePadSpeed());
       ball.vy *= -(1-computePadSpeed());
       ball.vx *= (1+computePadSpeed());
     }
+  }
 }
 
 //permet de calculer la vitesse du pad en fonction de sa position actuelle et de sa position à la frame précédente
@@ -182,8 +188,22 @@ double computePadSpeed(){
 void resolveCollisionBonus(BONUS* bonus){
     switch (bonus->bt){
         case S:
+            ball.vx *= 0.5;
+            ball.vy *= 0.5;
+            ballOnPadBonus = false;
+            break;
+        case C:
+            ballOnPadBonus = true;
+            break;
+        case B:
+            nextLevel();
+            setBallOnPad();
+            break;
+        case P:
+            addLive();
             break;
     }
+    addScore(1000);
     unspawn_bonus(bonus);
 }
 
