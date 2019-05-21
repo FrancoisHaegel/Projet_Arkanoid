@@ -43,6 +43,8 @@ void resolveCollision(BRICK *brick, double delta_t) {
         ball.vx = ball.vx * (-1);
     }
 
+    bool break_brick = true;
+
     switch (brick->bc){
         case BLANC:
             addScore(50);
@@ -68,10 +70,20 @@ void resolveCollision(BRICK *brick, double delta_t) {
         case JAUNE:
             addScore(120);
             break;
+        case GRIS:
+            if(brick->level > 1){
+                glow(brick);
+                break_brick = false;
+                brick->level--;
+                addScore(100 * currentLevel);
+            }
+            break;
     }
-    
-    brick->bc = TRANSPARENT;
-    brickCount--;
+
+    if(break_brick){
+        brick->bc = TRANSPARENT;
+        brickCount--;
+    }
     if(brickCount == 0 && currentLevel != nbLevel + 1){
         nextLevel();
     }

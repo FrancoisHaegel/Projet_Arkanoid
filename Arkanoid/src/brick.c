@@ -45,8 +45,6 @@ Brick_color getColorFromChar(char c){
 void load_brick_from_file(const char *path) {
     row_nbr = 13;
     column_nbr = 20;
-    //brick_list = malloc(row_nbr * column_nbr * sizeof(BRICK));
-
     brickCount = 0;
 
     brick_list = malloc(sizeof *brick_list * row_nbr );
@@ -71,7 +69,8 @@ void load_brick_from_file(const char *path) {
     while ((read = getline(&line, &len, fp)) != -1) {
         for (size_t i = 0; i < read; i++){
             if(line[i] != '\n'){
-                BRICK b = {i * 33, row * 16, getColorFromChar(line[i])};
+                // Create the brick with position, color, level
+                BRICK b = {i * 32, row * 16, getColorFromChar(line[i]), (line[i] == '8') ? 1 + currentLevel : 1, 0};
                 brick_list[i][row] = b;
                 if(b.bc != TRANSPARENT){
                     brickCount++;

@@ -36,8 +36,9 @@ void print_lives(void);
 
 void setBallOnPad();
 void setBallColor(unsigned int color);
+void glow( BRICK* brick );
 
-SDL_Rect getBrickSprite(const Brick_color* bc);
+SDL_Rect getBrickSprite(BRICK* brick);
 
 #endif // !PRINT_H
  

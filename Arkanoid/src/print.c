@@ -19,6 +19,12 @@ void init_print(void) {
     SDL_SetColorKey(plancheArkanoidSprites, true, 0);  // 0: 00/00/00 noir -> transparent
 }
 
+
+// Mark a brick to glow
+void glow( BRICK* brick ) {
+    brick->spriteCount = 50;
+}
+
 void print_ascii(const char c, const int x, const int y) {
     SDL_Rect src = {0, 0, 17, 20}; // x,y, w,h (0,0) en haut a gauche
     switch (c) {
@@ -208,10 +214,9 @@ void print_vaisseau(void) {
     drawAt(plancheSprites, &srcVaiss, &dest);
 }
 
-int epoqueBrick = 0; // 0-5 représente le sprite a afficher pour les briques brillantes
-SDL_Rect getBrickSprite(const Brick_color *bc) {
+SDL_Rect getBrickSprite(BRICK* brick) {
     SDL_Rect res = {0, 0, 32, 16}; // x,y, w,h (0,0) en haut a gauche
-    switch (*bc) {
+    switch (brick->bc) {
         case BLANC:
             res.x = 0 * res.w;
             res.y = 0;
@@ -245,16 +250,16 @@ SDL_Rect getBrickSprite(const Brick_color *bc) {
             res.y = 1 * res.h;
             break;
         case GRIS:
-            res.x = epoqueBrick * res.w;
+            res.x = (brick->spriteCount/10) * res.w;
             res.y = 2 * res.h;
+            if(brick->spriteCount > 0)
+                brick->spriteCount--;
             break;
         case OR:
-            res.x = epoqueBrick * res.w;
+            res.x = 0 * res.w;
             res.y = 3 * res.h;
             break;
     }
-    if (epoqueBrick == 4) { epoqueBrick = -1;}
-    //else { epoqueBrick++; }
     return res;
 }
 
@@ -262,7 +267,7 @@ void print_bricks(void) {
     for (size_t x = 0; x < row_nbr; x++) {
         for (size_t y = 0; y < column_nbr; y++) {
             if (brick_list[x][y].bc != TRANSPARENT) {
-                SDL_Rect src = getBrickSprite(&brick_list[x][y].bc);
+                SDL_Rect src = getBrickSprite(&brick_list[x][y]);
                 SDL_Rect dest = {brick_list[x][y].x, brick_list[x][y].y, 50, src.h};
                 drawAt(plancheArkanoidSprites, &src, &dest);
             }
