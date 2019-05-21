@@ -10,7 +10,7 @@ void init() {
     score = 0;
     nbLives = 3;
     nbLevel = 3;
-    currentLevel = 1;
+    currentLevel = 0;
     init_draw();
     init_print();
     init_ball(x_vault + ball.rayon, win_surf->h - 69 - ball.rayon);
