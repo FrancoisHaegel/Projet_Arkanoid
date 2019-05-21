@@ -43,6 +43,34 @@ void resolveCollision(BRICK *brick) {
             break;
     }
 
+/*
+    double ballCenterX = ball.x + ball.rayon;
+    double ballCenterY = ball.y + ball.rayon;
+
+    double brickCenterX = brick->x + 16;
+    double brickCenterY = brick->y + 8;
+
+    ////////3e tentative /////////
+    if(ballCenterX > brickCenterX - 16 - ball.rayon
+       && ballCenterY > brickCenterY - 8 - ball.rayon
+       && ballCenterY < brickCenterY + 8 + ball.rayon){
+        ball.vx = ball.vx * (-1);
+    }else if(ballCenterX > brickCenterX + 16 + ball.rayon
+             && ballCenterY > brickCenterY - 8 - ball.rayon
+             && ballCenterY < brickCenterY + 8 + ball.rayon){
+        ball.vx = ball.vx * (-1);
+    }
+     if(ballCenterY < brickCenterY - 8 - ball.rayon
+       && ballCenterX > brickCenterX - 16 - ball.rayon
+       && ballCenterX < brickCenterX + 16 + ball.rayon){
+        ball.vy = ball.vy * (-1);
+    }else if(ballCenterY > brickCenterY + 8 + ball.rayon
+             && ballCenterX > brickCenterX - 16 - ball.rayon
+             && ballCenterX < brickCenterX + 16 + ball.rayon){
+        ball.vy = ball.vy * (-1);
+    }
+*/
+
     ball.vy = ball.vy * (-1);
     brick->bc = TRANSPARENT;
     brickCount--;

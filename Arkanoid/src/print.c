@@ -20,7 +20,7 @@ void init_print(void) {
 }
 
 void print_ascii(const char c, const int x, const int y) {
-    SDL_Rect src = {0, 0, 14, 20}; // x,y, w,h (0,0) en haut a gauche
+    SDL_Rect src = {0, 0, 17, 20}; // x,y, w,h (0,0) en haut a gauche
     switch (c) {
         case '0':
             src.x = 2;
@@ -62,6 +62,110 @@ void print_ascii(const char c, const int x, const int y) {
             src.x = 290;
             src.y = 38;
             break;
+        case 'A':
+            src.x = 32 * 1;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'B':
+            src.x = 32 * 2;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'C':
+            src.x = 32 * 3;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'D':
+            src.x = 32 * 4;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'E':
+            src.x = 32 * 5;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'F':
+            src.x = 32 * 6;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'G':
+            src.x = 32 * 7;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'H':
+            src.x = 32 * 8;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'I':
+            src.x = 32 * 9;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'J':
+            src.x = 32 * 10;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'K':
+            src.x = 32 * 11;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'L':
+            src.x = 32 * 12;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'M':
+            src.x = 32 * 13;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'N':
+            src.x = 32 * 14;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'O':
+            src.x = 32 * 15;
+            src.y = 6 + 32 * 2;
+            break;
+        case 'P':
+            src.x = 32 * 0;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'Q':
+            src.x = 32 * 1;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'R':
+            src.x = 32 * 2;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'S':
+            src.x = 32 * 3;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'T':
+            src.x = 32 * 4;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'U':
+            src.x = 32 * 5;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'V':
+            src.x = 32 * 6;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'W':
+            src.x = 32 * 7;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'X':
+            src.x = 32 * 8;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'Y':
+            src.x = 32 * 9;
+            src.y = 6 + 32 * 3;
+            break;
+        case 'Z':
+            src.x = 32 * 10;
+            src.y = 6 + 32 * 3;
+            break;
     }
     SDL_Rect destASCII = {x, y, 0, 0};
     drawAt(plancheASCIISprites, &src, &destASCII);
@@ -72,6 +176,14 @@ void print_score(const int score) {
     char *arr_score = toArray(score);
     for (size_t i = 0; i < 5; i++) {
         print_ascii(arr_score[i], i * 18 + 20, 20);
+    }
+}
+
+
+// Imprime le charArray de taille size à partir des positions x et y, la largeur du texte est size * 20 px
+void print_text(const char* charArray, const size_t size, const int x, const int y){
+    for (size_t i = 0; i < size; i++) {
+        print_ascii(charArray[i], i * 20 + x, y);
     }
 }
 

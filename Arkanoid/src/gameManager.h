@@ -42,6 +42,7 @@ void draw();
 void init();
 bool start();
 void nextLevel();
+void restart();
 void win();
 void loose();
 void addLive();

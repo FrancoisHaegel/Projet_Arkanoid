@@ -27,6 +27,7 @@ extern SDL_Rect dest;
 void init_print(void);
 void print_ascii(const char c, const int x, const int y);
 void print_score(const int score);
+void print_text(const char* charArray, const size_t size, const int x, const int y);
 void print_background(void);
 void print_ball(void);
 void print_vaisseau(void);

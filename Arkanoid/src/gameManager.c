@@ -43,6 +43,10 @@ bool start(){
                         case SDLK_ESCAPE:
                             quit = true;
                             break;
+                        case SDLK_RETURN:
+                            if(!play)
+                                restart();
+                            break;
                         default:
                             break;
                     }
@@ -92,12 +96,24 @@ void nextLevel(){
     }
 }
 
+void restart(){
+    score = 0;
+    nbLives = 3;
+    currentLevel = 0;
+    nextLevel();
+    play = true;
+}
+
 void win(){
     play = false;
+    print_text("CONGRATULATION", 14, 69, 400);
+    print_text("RETURN TO RESTART", 17, 54, 440);
 }
 
 void loose(){
     play = false;
+    print_text("WASTED", 6, 159, 400);
+    print_text("RETURN TO RESTART", 17, 54, 440);
 }
 
 void addLive(){
