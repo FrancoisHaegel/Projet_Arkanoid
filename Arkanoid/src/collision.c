@@ -101,7 +101,7 @@ void destroyBrick(BRICK *brick){
         brick->bc = TRANSPARENT;
         brickCount--;
     }
-    if(brickCount == 0 && currentLevel != nbLevel + 1){
+    if(brickCount == 0){
         nextLevel();
     }
 }
